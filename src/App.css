@@ -25,7 +25,7 @@ html,body{
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 85%;
+  height: 95%;
 }
 .left{
   width: 40%;
@@ -35,11 +35,65 @@ html,body{
   gap: 25px;
   
 }
-.right{
+.rightCont{
+  height: 95%;
   width: 50%;
-  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.right{
+  width: 100%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+.heading{
+  width: 100%;
+  height: 15%;
+  background: #0E374E;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  gap: 15px;
+}
+.top{
+  display: flex;
+  font-size: xx-large;
+  font-weight: bolder;
+}
+.bottom{
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
 }
 
+.body{
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-direction:column ;
+  gap: 25px;
+}
+.educationBlock,
+.experienceBlock{
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+}
+.title{
+  text-align: center;
+  font-size: larger;
+  font-weight: bold;
+  padding: 10px;
+  background: #D3D3D344;
+ 
+}
 form{
   background: white;
   border-radius: 15px;
@@ -90,13 +144,16 @@ input {
   border-radius: 5px;
   border: none;
   outline:none;
-  background: rgb(240, 238, 238);
+  background: #D3D3D344;
   transition: outline 50ms ease-in-out ;
   height: 30px;
-  text-align: left;
+  
 }
 
 input:hover,
 input:focus {
   outline: 3px solid darkblue;
 }
+
+
+
