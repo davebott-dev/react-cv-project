@@ -13,8 +13,7 @@ const Panel = ({title,children,isActive,onShow}) => {
     </form>
 
     )
-
-
+ 
 }
 
 export default Panel;
