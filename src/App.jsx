@@ -1,49 +1,110 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Panel from "./components/accordian";
 import "./App.css";
+//initialize a variable to use as a key for map function below
+let nextIdEdu = 0;
+let nextIdJob = 0;
 
 function App() {
+  //useState that allows for panel functionality--when one panel is open
+  //the other closes
   const [activeIndex, setActiveIndex] = useState(0);
+
+  //useState allows the input values to change
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
   const [address, setAddress] = useState("");
-  const [increment, setIncrement] =useState(0);
 
-  const handleFullName = (e) => {
-    setFullName(e.target.value);
-  };
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-  };
-  const handlePhoneNum = (e) => {
-    setPhoneNum(e.target.value);
-  };
-  const handleAddress = (e) => {
-    setAddress(e.target.value);
-  };
-//fist this function
-  const createBlock = (count) => {
-    let list = [];
-    for(let i=0;i<count;i++) {
-      list.push('hello world')
-    }
+  const [schoolName, setSchoolName] = useState("");
+  const [degreeTitle, setDegreeTitle] = useState("");
+  const [schoolLocation, setSchoolLocation] = useState("");
+  const [schoolStart, setSchoolStart] = useState("");
+  const [schoolEnd, setSchoolEnd] = useState("");
 
-  
-  
-  return list.map(element => (
-  <>
-    <div>
-    <div>{element} </div>
-    <div>University of North Carolina </div>
-  </div>
-  <div>
-    <div>University of North Carolina </div>
-    <div>116 Manning Street, Chapel Hill, NC </div>
-  </div> 
-</>
-))
-  }
+  const [companyName, setCompanyName] = useState("");
+  const [positionTitle, setPositionTitle] = useState("");
+  const [positionLocation, setPositionLocation] = useState("");
+  const [jobStart, setJobStart] = useState("");
+  const [jobEnd, setJobEnd] = useState("");
+  const [jobDescription, setJobDescription] = useState("");
+
+  //initializes a useState object to be an empty array
+  const [educationInfo, setEducationInfo] = useState([]);
+  const [experienceInfo, setExperienceInfo] = useState([]);
+
+  //functions that push all the necessary information to the end of the array
+  //the array element is an object that stores all necessary data
+  const func1 = () => {
+    setEducationInfo([
+      ...educationInfo,
+      {
+        id: nextIdEdu++,
+        name: schoolName,
+        degree: degreeTitle,
+        location: schoolLocation,
+        start: schoolStart,
+        end: schoolEnd,
+      },
+    ]);
+  };
+
+  const func2 = () => {
+    setExperienceInfo([
+      ...experienceInfo,
+      {
+        id: nextIdJob++,
+        name: companyName,
+        title: positionTitle,
+        location: positionLocation,
+        start: jobStart,
+        end: jobEnd,
+        description: jobDescription,
+      },
+    ]);
+  };
+
+  //finally helper functions that will map through the arrays and return jsx
+  const createEducationBlock = () => {
+    return educationInfo.map((school) => (
+      <div className="block" key={school.id}>
+        <div>
+          <div>
+            {school.start} - {school.end}
+          </div>
+          <div>{school.name}</div>
+        </div>
+        <div>
+          <div>
+            <strong>{school.degree}</strong>{" "}
+          </div>
+          <div>{school.location} </div>
+        </div>
+      </div>
+    ));
+  };
+
+  const createExperienceBlock = () => {
+    return experienceInfo.map((element) => (
+      <>
+        <div className="block" key={element.id}>
+          <div>
+            <div className="innerBlock">
+              {element.start} - {element.end}
+            </div>
+            <div className="innerBlock">{element.name}</div>
+          </div>
+          <div>
+            <div className="innerBlock">
+              <strong>{element.title}</strong>{" "}
+            </div>
+            <div className="innerBlock">{element.location} </div>
+          </div>
+        </div>
+        <div className="innerBlock descrip">{element.description}</div>
+      </>
+    ));
+  };
 
   return (
     <div className="container">
@@ -55,7 +116,7 @@ function App() {
             type="text"
             id="fullName"
             placeholder="David Bottenberg"
-            onChange={handleFullName}
+            onChange={(e) => setFullName(e.target.value)}
           ></input>
 
           <label htmlFor="email">Email:</label>
@@ -63,7 +124,7 @@ function App() {
             type="email"
             id="email"
             placeholder="example@email.com"
-            onChange={handleEmail}
+            onChange={(e) => setEmail(e.target.value)}
           ></input>
 
           <label htmlFor="phoneNum">Phone Number:</label>
@@ -71,7 +132,7 @@ function App() {
             type="number"
             id="phoneNum"
             placeholder="123-456-7890"
-            onChange={handlePhoneNum}
+            onChange={(e) => setPhoneNum(e.target.value)}
           ></input>
 
           <label htmlFor="address">Address:</label>
@@ -79,7 +140,7 @@ function App() {
             type="text"
             id="address"
             placeholder="Anytown, USA"
-            onChange={handleAddress}
+            onChange={(e) => setAddress(e.target.value)}
           ></input>
         </form>
 
@@ -92,6 +153,7 @@ function App() {
           <input
             type="text"
             id="school"
+            onChange={(e) => setSchoolName(e.target.value)}
             placeholder="Enter School/University"
           ></input>
 
@@ -99,18 +161,27 @@ function App() {
           <input
             type="text"
             id="degree"
+            onChange={(e) => setDegreeTitle(e.target.value)}
             placeholder="Enter Degree/Field of Study"
           ></input>
 
           <div className="dates">
             <div className="date">
               <label htmlFor="startDate">Start Date:</label>
-              <input type="date" id="startDate"></input>
+              <input
+                type="date"
+                id="startDate"
+                onChange={(e) => setSchoolStart(e.target.value)}
+              ></input>
             </div>
 
             <div className="date">
               <label htmlFor="endDate">End Date:</label>
-              <input type="date" id="endDate"></input>
+              <input
+                type="date"
+                id="endDate"
+                onChange={(e) => setSchoolEnd(e.target.value)}
+              ></input>
             </div>
           </div>
 
@@ -118,10 +189,13 @@ function App() {
           <input
             type="text"
             id="location"
+            onChange={(e) => setSchoolLocation(e.target.value)}
             placeholder="Location of School/University"
           ></input>
 
-          <button type="button" onClick ={() =>setIncrement((prev)=>prev+1)} >+ education</button>
+          <button type="button" onClick={func1}>
+            + education
+          </button>
         </Panel>
 
         <Panel
@@ -134,6 +208,7 @@ function App() {
             type="text"
             id="company"
             placeholder="Enter Company Name"
+            onChange={(e) => setCompanyName(e.target.value)}
           ></input>
 
           <label htmlFor="position">Position Title:</label>
@@ -141,17 +216,26 @@ function App() {
             type="text"
             id="position"
             placeholder="Enter Position Title"
+            onChange={(e) => setPositionTitle(e.target.value)}
           ></input>
 
           <div className="dates">
             <div className="date">
               <label htmlFor="startDate">Start Date:</label>
-              <input type="date" id="startDate"></input>
+              <input
+                type="date"
+                id="startDate"
+                onChange={(e) => setJobStart(e.target.value)}
+              ></input>
             </div>
 
             <div className="date">
               <label htmlFor="endDate">End Date:</label>
-              <input type="date" id="endDate"></input>
+              <input
+                type="date"
+                id="endDate"
+                onChange={(e) => setJobEnd(e.target.value)}
+              ></input>
             </div>
           </div>
 
@@ -160,6 +244,7 @@ function App() {
             type="text"
             id="location"
             placeholder="Enter Job Location"
+            onChange={(e) => setPositionLocation(e.target.value)}
           ></input>
 
           <label htmlFor="description">Description:</label>
@@ -167,9 +252,12 @@ function App() {
             type="text"
             id="description"
             placeholder="Briefly describe your role"
+            onChange={(e) => setJobDescription(e.target.value)}
           ></textarea>
 
-          <button type="button">+ experience</button>
+          <button type="button" onClick={func2}>
+            + experience
+          </button>
         </Panel>
       </div>
       <div className="rightCont">
@@ -276,19 +364,25 @@ function App() {
           <div className="body">
             <div className="educationBlock">
               <div className="title">Education</div>
-
-              <div className="block">
-                 {createBlock(increment)}
-             
-              </div>
-
+              {createEducationBlock()}
             </div>
             <div className="experienceBlock">
               <div className="title">Experience</div>
+              {createExperienceBlock()}
             </div>
           </div>
         </div>
-        <button className="btn">Save</button>
+        <button
+          className="btn"
+          onClick={() =>{
+            setTimeout(() => {
+              alert("Your resume has now been saved");
+            }, 2000)
+            }
+          }
+        >
+          Save
+        </button>
       </div>
     </div>
   );

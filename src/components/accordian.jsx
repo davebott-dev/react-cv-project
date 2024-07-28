@@ -1,6 +1,4 @@
-import {useState} from 'react';
-
-
+//component used in the app to either show or hide the side panels
 const Panel = ({title,children,isActive,onShow}) => {
 
     return (
